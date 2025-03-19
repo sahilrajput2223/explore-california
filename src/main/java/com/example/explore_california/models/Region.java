@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum Region {
 
-    Central_Coast("Central Coast"), Southern_California("Southern California"), Northern_California("Northern California"), Varies("Varies");
+    Central_Coast("Central Coast"), Southern_California("Southern California"), Northern_California("Northern California"), Varies("Varies"), Napa_Sonoma_Counties("Napa/Sonoma Counties");
 
     private final String label;
 
@@ -20,4 +20,7 @@ public enum Region {
         return null;
     }
 
+    public String getLabel() {
+        return label;
+    }
 }

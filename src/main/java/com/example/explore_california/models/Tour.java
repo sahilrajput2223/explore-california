@@ -1,9 +1,13 @@
 package com.example.explore_california.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tour")
 @Entity(name = "tour")
 public class Tour {
@@ -43,4 +47,17 @@ public class Tour {
     @ManyToOne
     @JoinColumn(name = "tour_package_code")
     private TourPackage tourPackage;
+
+    public Tour(String title, String description, String blurb, Integer price, String duration, String bullets, String keywords, Difficulty difficulty, Region region, TourPackage tourPackage) {
+        this.title = title;
+        this.description = description;
+        this.blurb = blurb;
+        this.price = price;
+        this.duration = duration;
+        this.bullets = bullets;
+        this.keywords = keywords;
+        this.difficulty = difficulty;
+        this.region = region;
+        this.tourPackage = tourPackage;
+    }
 }
