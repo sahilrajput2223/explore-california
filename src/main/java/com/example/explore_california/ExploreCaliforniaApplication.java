@@ -42,6 +42,12 @@ public class ExploreCaliforniaApplication implements CommandLineRunner {
         System.out.println("Tour Count : " + tourService.totalTours());
         createAllTours(TOUR_IMPORT_FILE);
         System.out.println("Tour Count After Creation: " + tourService.totalTours());
+
+        /****** Tour Lookup By Difficulty ******/
+        System.out.println("Tour Lookup By Difficulty : " + tourService.lookupByDifficulty(Difficulty.Easy).size());
+
+        /****** Tour Lookup By Package Name ******/
+        System.out.println("Tour Lookup By Package : " + tourService.lookupByTourPackageName("Backpack Cal").size());
     }
 
     private void createAllTourPackages() {
