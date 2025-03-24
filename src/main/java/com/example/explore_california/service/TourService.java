@@ -9,6 +9,8 @@ import com.example.explore_california.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TourService {
 
@@ -27,4 +29,11 @@ public class TourService {
         return tourRepository.count();
     }
 
+    public List<Tour>  lookupByDifficulty(Difficulty difficulty){
+        return tourRepository.findByDifficulty(difficulty);
+    }
+
+    public List<Tour>  lookupByTourPackageName(String name){
+        return tourRepository.findByTourPackageName(name);
+    }
 }
