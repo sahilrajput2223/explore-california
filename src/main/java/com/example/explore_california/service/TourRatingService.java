@@ -1,5 +1,6 @@
 package com.example.explore_california.service;
 
+import com.example.explore_california.dtos.RatingCreateReqDTO;
 import com.example.explore_california.models.Tour;
 import com.example.explore_california.models.TourRating;
 import com.example.explore_california.repository.TourRatingRepository;
@@ -7,6 +8,7 @@ import com.example.explore_california.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -24,5 +26,10 @@ public class TourRatingService {
 
     private Tour verifyTour(int tourId) {
         return tourRepository.findById(tourId).orElseThrow(() -> new NoSuchElementException("Tour does not exist " + tourId));
+    }
+
+    public List<RatingCreateReqDTO> getAllRatingsForTour(int tourId) {
+        List<TourRating> tourRatings = tourRatingRepository.findByTourId(verifyTour(tourId).getId());
+        return tourRatings.stream().map(RatingCreateReqDTO::new).toList();
     }
 }

@@ -1,11 +1,15 @@
 package com.example.explore_california.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "tour_rating")
 @Table(name = "tour_rating")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TourRating {
 
     @Id
