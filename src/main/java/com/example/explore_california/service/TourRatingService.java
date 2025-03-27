@@ -8,8 +8,7 @@ import com.example.explore_california.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Service
 public class TourRatingService {
@@ -31,5 +30,11 @@ public class TourRatingService {
     public List<RatingCreateReqDTO> getAllRatingsForTour(int tourId) {
         List<TourRating> tourRatings = tourRatingRepository.findByTourId(verifyTour(tourId).getId());
         return tourRatings.stream().map(RatingCreateReqDTO::new).toList();
+    }
+
+    public Map<String, Double> getAverageTourRatings(int tourId) {
+        List<TourRating> tourRatings = tourRatingRepository.findByTourId(verifyTour(tourId).getId());
+        OptionalDouble averageRating = tourRatings.stream().mapToInt(TourRating::getScore).average();
+        return Map.of("average", averageRating.isPresent() ? averageRating.getAsDouble() : 0.0d);
     }
 }

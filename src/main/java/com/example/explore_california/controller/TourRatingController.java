@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/tours/{tourId}/ratings")
@@ -25,5 +26,10 @@ public class TourRatingController {
     @GetMapping
     private List<RatingCreateReqDTO> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId) {
         return tourRatingService.getAllRatingsForTour(tourId);
+    }
+
+    @GetMapping(value = "/average")
+    private Map<String, Double> getAverageTourRatings(@PathVariable(value = "tourId") int tourId) {
+        return tourRatingService.getAverageTourRatings(tourId);
     }
 }
