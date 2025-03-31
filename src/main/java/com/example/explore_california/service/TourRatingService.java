@@ -23,8 +23,20 @@ public class TourRatingService {
         return tourRatingRepository.save(new TourRating(verifyTour(tourId), customerId, score, comment));
     }
 
+    public RatingCreateReqDTO updateTourRating(int tourRatingId, RatingCreateReqDTO ratingCreateReqDTO){
+        TourRating tourRating = verifyTourRating(tourRatingId, ratingCreateReqDTO.getCustomerId());
+        tourRating.setComment(ratingCreateReqDTO.getComment());
+        tourRating.setScore(ratingCreateReqDTO.getScore());
+        tourRating = tourRatingRepository.save(tourRating);
+        return new RatingCreateReqDTO(tourRating);
+    }
+
     private Tour verifyTour(int tourId) {
         return tourRepository.findById(tourId).orElseThrow(() -> new NoSuchElementException("Tour does not exist " + tourId));
+    }
+
+    private TourRating verifyTourRating(int tourRatingId, int customerId) {
+        return tourRatingRepository.findByTourIdAndCustomerId(tourRatingId, customerId).orElseThrow(() -> new NoSuchElementException("Tour Rating does not exist for given tour and customer id"));
     }
 
     public List<RatingCreateReqDTO> getAllRatingsForTour(int tourId) {

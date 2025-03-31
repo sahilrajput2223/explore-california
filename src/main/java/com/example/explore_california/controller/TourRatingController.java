@@ -23,6 +23,11 @@ public class TourRatingController {
         tourRatingService.createTourRating(tourId, ratingCreateReqDTO.getCustomerId(), ratingCreateReqDTO.getScore(), ratingCreateReqDTO.getComment());
     }
 
+    @PutMapping
+    private void updateTourRating(@PathVariable(value = "tourId") int tourId, @RequestBody RatingCreateReqDTO ratingCreateReqDTO) {
+        tourRatingService.updateTourRating(tourId, ratingCreateReqDTO);
+    }
+
     @GetMapping
     private List<RatingCreateReqDTO> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId) {
         return tourRatingService.getAllRatingsForTour(tourId);
