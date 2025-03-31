@@ -31,6 +31,17 @@ public class TourRatingService {
         return new RatingCreateReqDTO(tourRating);
     }
 
+    public RatingCreateReqDTO updateTourRatingWithPatch(int tourRatingId, RatingCreateReqDTO ratingCreateReqDTO) {
+        return new RatingCreateReqDTO(updateSome(tourRatingId, ratingCreateReqDTO.getCustomerId(), Optional.ofNullable(ratingCreateReqDTO.getScore()), Optional.ofNullable(ratingCreateReqDTO.getComment())));
+    }
+
+    public TourRating updateSome(int tourId, Integer customerId, Optional<Integer> score, Optional<String> comment) {
+        TourRating rating = verifyTourRating(tourId, customerId);
+        score.ifPresent(rating::setScore);
+        comment.ifPresent(rating::setComment);
+        return tourRatingRepository.save(rating);
+    }
+
     private Tour verifyTour(int tourId) {
         return tourRepository.findById(tourId).orElseThrow(() -> new NoSuchElementException("Tour does not exist " + tourId));
     }
