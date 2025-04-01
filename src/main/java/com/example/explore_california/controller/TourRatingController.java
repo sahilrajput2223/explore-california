@@ -38,6 +38,11 @@ public class TourRatingController {
         return tourRatingService.getAllRatingsForTour(tourId);
     }
 
+    @DeleteMapping("/{customerId}")
+    public void deleteTourRating(@PathVariable(value = "tourId") int tourId, @PathVariable(value = "customerId") int customerId) {
+        tourRatingService.deleteTourRating(tourId, customerId);
+    }
+
     @GetMapping(value = "/average")
     private Map<String, Double> getAverageTourRatings(@PathVariable(value = "tourId") int tourId) {
         return tourRatingService.getAverageTourRatings(tourId);
