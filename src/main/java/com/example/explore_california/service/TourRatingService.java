@@ -23,12 +23,17 @@ public class TourRatingService {
         return tourRatingRepository.save(new TourRating(verifyTour(tourId), customerId, score, comment));
     }
 
-    public RatingCreateReqDTO updateTourRating(int tourRatingId, RatingCreateReqDTO ratingCreateReqDTO){
-        TourRating tourRating = verifyTourRating(tourRatingId, ratingCreateReqDTO.getCustomerId());
+    public RatingCreateReqDTO updateTourRating(int tourId, RatingCreateReqDTO ratingCreateReqDTO){
+        TourRating tourRating = verifyTourRating(tourId, ratingCreateReqDTO.getCustomerId());
         tourRating.setComment(ratingCreateReqDTO.getComment());
         tourRating.setScore(ratingCreateReqDTO.getScore());
         tourRating = tourRatingRepository.save(tourRating);
         return new RatingCreateReqDTO(tourRating);
+    }
+
+    public void deleteTourRating(int tourId, int customerId){
+        TourRating tourRating = verifyTourRating(tourId, customerId);
+        tourRatingRepository.delete(tourRating);
     }
 
     public RatingCreateReqDTO updateTourRatingWithPatch(int tourRatingId, RatingCreateReqDTO ratingCreateReqDTO) {
