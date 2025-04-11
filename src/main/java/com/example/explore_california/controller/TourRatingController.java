@@ -47,4 +47,12 @@ public class TourRatingController {
     private Map<String, Double> getAverageTourRatings(@PathVariable(value = "tourId") int tourId) {
         return tourRatingService.getAverageTourRatings(tourId);
     }
+
+    @PostMapping("/batch")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createManyTourRatings(@PathVariable(value = "tourId") int tourId,
+                                      @RequestParam(value = "score") int score,
+                                      @RequestBody List<Integer> customers){
+        tourRatingService.createManyTourRating(tourId, score, customers);
+    }
 }
