@@ -5,12 +5,15 @@ import com.example.explore_california.models.Tour;
 import com.example.explore_california.models.TourRating;
 import com.example.explore_california.repository.TourRatingRepository;
 import com.example.explore_california.repository.TourRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@Transactional
 public class TourRatingService {
 
     @Autowired
@@ -64,5 +67,15 @@ public class TourRatingService {
         List<TourRating> tourRatings = tourRatingRepository.findByTourId(verifyTour(tourId).getId());
         OptionalDouble averageRating = tourRatings.stream().mapToInt(TourRating::getScore).average();
         return Map.of("average", averageRating.isPresent() ? averageRating.getAsDouble() : 0.0d);
+    }
+
+    public void createManyTourRating(int tourId, int score, List<Integer> customers) {
+        Tour tour = verifyTour(tourId);
+        for (Integer customer : customers){
+            if(tourRatingRepository.findByTourIdAndCustomerId(tourId, customer).isPresent()){
+                throw new ConstraintViolationException("Unable to create duplicate ratings", null);
+            }
+            tourRatingRepository.save(new TourRating(tour, customer, score, null));
+        }
     }
 }
