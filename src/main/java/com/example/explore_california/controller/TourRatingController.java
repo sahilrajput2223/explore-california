@@ -66,6 +66,7 @@ public class TourRatingController {
 
     @PostMapping("/batch")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(description = "Give Tour Rating in Batch")
     public void createManyTourRatings(@PathVariable(value = "tourId") int tourId,
                                       @RequestParam(value = "score") int score,
                                       @RequestBody List<Integer> customers){
